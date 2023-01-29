@@ -1,24 +1,30 @@
-import { Inter } from "@next/font/google";
-// import { Element } from "@/styles/element";
 import { useQuery } from "@apollo/client";
 
-import Apollo from "../apollo";
+import Link from "next/link";
 import Image from "next/image";
-import { gql } from "@apollo/client";
+
+import Apollo from "../apollo";
+
 import { CHARACTERS_QUERY } from "../graphql/queries";
 import { getDataFromTree } from "@apollo/client/react/ssr";
 
-// const inter = Inter({ subsets: ["latin"] });
+interface DataObj {
+  __typename: String;
+  gender: String;
+  id: String;
+  image: String;
+  name: String;
+  species: String;
+  status: String;
+}
 
 function Home() {
   const { data, loading } = useQuery(CHARACTERS_QUERY);
-  // console.log(data?.characters?.results);
   const results = data?.characters?.results;
-  console.log(results);
   if (loading) return <div>Loading...</div>;
   return (
     <div>
-      {data?.characters?.results.map((element: any) => (
+      {data?.characters?.results.map((element: DataObj) => (
         <div key={element.id}>
           <Image
             width={"100px"}
@@ -26,7 +32,9 @@ function Home() {
             src={element.image}
             alt={element.name}
           />
-          {element.name}
+          <Link href="/characters/[id]" as={`characters/${element.id}`}>
+            {element.name}
+          </Link>
         </div>
       ))}
     </div>

@@ -20,3 +20,19 @@ export const CHARACTERS_QUERY = gql`
     }
   }
 `;
+
+export const CHARACTER_QUERY = gql`
+  query character($id: ID!) {
+    character(id: $id) {
+      id
+      image
+      name
+      gender
+      species
+      origin {
+        dimension
+        id
+      }
+    }
+  }
+`;
