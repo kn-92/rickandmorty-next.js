@@ -7,6 +7,7 @@ import Apollo from "../apollo";
 
 import { CHARACTERS_QUERY } from "../graphql/queries";
 import { getDataFromTree } from "@apollo/client/react/ssr";
+import { useState } from "react";
 
 interface DataObj {
   __typename: String;
@@ -19,11 +20,29 @@ interface DataObj {
 }
 
 function Home() {
+  const [inputValue, setInputValue] = useState("");
   const { data, loading } = useQuery(CHARACTERS_QUERY);
+
   const results = data?.characters?.results;
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleSubmit = () => {};
+
   if (loading) return <div>Loading...</div>;
   return (
     <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          value={inputValue}
+          onChange={handleInputChange}
+          type="text"
+          placeholder="Search for character"
+        />
+      </form>
+
       {data?.characters?.results.map((element: DataObj) => (
         <div key={element.id}>
           <Image
