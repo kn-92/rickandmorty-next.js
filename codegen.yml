@@ -1,0 +1,17 @@
+overwrite: true
+schema: "https://rickandmortyapi.com/graphql"
+documents: "graphql/*.ts"
+
+generates:
+generated/index.tsx:
+  config:
+    reactApolloVersion: 5.3.0
+    withHooks: true
+  plugins:
+    - add:
+      content: "generated file, use `npm codegen ` to rengenerate"
+    - add:
+      content: "/* tslint:disable */"
+    - "typescript"
+    - "typescript-operations"
+    - "typescript=react-apollo"
