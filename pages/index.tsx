@@ -46,8 +46,8 @@ function Home() {
       {data?.characters?.results.map((element: DataObj) => (
         <div key={element.id}>
           <Image
-            width={"100px"}
-            height={"100px"}
+            width={100}
+            height={100}
             src={element.image}
             alt={element.name}
           />

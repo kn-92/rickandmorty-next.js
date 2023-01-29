@@ -21,8 +21,8 @@ const SingleCharacterPage = ({ query }) => {
         <Image
           src={data?.character?.image}
           alt={data?.character?.name}
-          width={"100px"}
-          height={"100px"}
+          width={100}
+          height={100}
         />
         <p>{data?.character?.name}</p>
         <p>{data?.character?.gender}</p>
