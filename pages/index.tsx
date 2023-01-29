@@ -1,4 +1,5 @@
 import { useQuery } from "@apollo/client";
+import React, { MouseEventHandler } from "react";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -20,30 +21,52 @@ interface DataObj {
 }
 
 function Home() {
-  const [inputValue, setInputValue] = useState("");
-  const { data, loading } = useQuery(CHARACTERS_QUERY);
-
+  const [inputValue, setInputValue] = useState({ name: "" });
+  const [page, setPage] = useState(2);
+  const { data, loading, fetchMore } = useQuery(CHARACTERS_QUERY);
+  console.log(data);
   const results = data?.characters?.results;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    setInputValue({
+      ...inputValue,
+      name: e.target.value,
+    });
   };
 
-  const handleSubmit = () => {};
+  const handleNext = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    fetchMore({ variables: { page: page } });
+    setPage(page + 1);
+  };
+
+  const handlePrevious = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (page === 2) return;
+    fetchMore({ variables: { page: page - 1 } });
+    setPage(page - 1);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    fetchMore({ variables: { filter: inputValue } });
+    setInputValue({ name: "" });
+  };
 
   if (loading) return <div>Loading...</div>;
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <input
-          value={inputValue}
+          value={inputValue.name}
           onChange={handleInputChange}
           type="text"
           placeholder="Search for character"
         />
+        <button>submit</button>
       </form>
 
-      {data?.characters?.results.map((element: DataObj) => (
+      {results.map((element: DataObj) => (
         <div key={element.id}>
           <Image
             width={100}
@@ -56,6 +79,9 @@ function Home() {
           </Link>
         </div>
       ))}
+      <button onClick={handleNext}>Next Page</button>
+      <div>{page - 1}</div>
+      <button onClick={handlePrevious}>Previous Page</button>
     </div>
   );
 }
