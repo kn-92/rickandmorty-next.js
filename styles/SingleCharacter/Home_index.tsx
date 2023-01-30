@@ -18,6 +18,11 @@ export const AppWrapper = styled.div`
   & img {
     border-radius: 5px;
   }
+  & {
+    input {
+      margin-top: 10px;
+    }
+  }
 `;
 
 export const CharacterElement = styled.div`

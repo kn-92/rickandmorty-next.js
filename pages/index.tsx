@@ -78,7 +78,7 @@ function Home() {
           value={inputValue.name}
           onChange={handleInputChange}
           type="text"
-          placeholder="Search for character"
+          placeholder="Search for a character"
         />
         <button>submit</button>
       </form>
