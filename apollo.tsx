@@ -18,17 +18,7 @@ const Apollo = nextWithApollo(
       headers: {
         ...(headers as Record<string, string>),
       },
-      cache: new InMemoryCache({
-        typePolicies: {
-          CHARACTERS_QUERY: {
-            merge: true,
-          },
-
-          CHARACTER_QUERY: {
-            merge: true,
-          },
-        },
-      }).restore(initialState || {}),
+      cache: new InMemoryCache().restore(initialState || {}),
     });
   },
   {

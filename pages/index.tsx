@@ -41,13 +41,13 @@ function Home() {
         return fetchMoreResult;
       },
     });
-    setPage(page + 1);
+    setPage((prev) => prev + 1);
   };
 
   const handlePrevious = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (page === 2) return;
-    setPage(page - 1);
+    setPage((prev) => prev - 1);
     fetchMore({
       variables: { page: page - 2 },
       updateQuery(previousQueryResult, { fetchMoreResult }) {
