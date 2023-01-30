@@ -5,11 +5,10 @@ import Image from "next/image";
 
 import Apollo from "../apollo";
 
-import { AppWrapper, Paggination } from "@/styles/SingleCharacter/Home_index";
-import { CharacterElement } from "@/styles/SingleCharacter/Home_index";
+import { AppWrapper, Paggination } from "@/styles/Home_index";
+import { CharacterElement } from "@/styles/Home_index";
 
 import { CHARACTERS_QUERY } from "../graphql/queries";
-import { getDataFromTree } from "@apollo/client/react/ssr";
 import { useState } from "react";
 
 interface DataObj {
@@ -105,4 +104,4 @@ function Home() {
   );
 }
 
-export default Apollo(Home, { getDataFromTree });
+export default Apollo(Home);

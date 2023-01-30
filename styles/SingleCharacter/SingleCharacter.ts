@@ -13,4 +13,7 @@ export const SingleCharacter = styled.div`
   -webkit-box-shadow: 3px 9px 14px -5px rgba(66, 68, 90, 1);
   -moz-box-shadow: 3px 9px 14px -5px rgba(66, 68, 90, 1);
   box-shadow: 3px 9px 14px -5px rgba(66, 68, 90, 1);
+  & p {
+    font-weight: 600;
+  }
 `;

@@ -1,4 +1,3 @@
-import { getDataFromTree } from "@apollo/client/react/ssr";
 import Apollo from "../../apollo";
 import { useQuery } from "@apollo/client";
 import get from "lodash";
@@ -7,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { SingleCharacter } from "@/styles/SingleCharacter/SingleCharacter";
-import { AppWrapper } from "@/styles/SingleCharacter/Home_index";
+import { AppWrapper } from "@/styles/Home_index";
 
 import { CHARACTER_QUERY } from "@/graphql/queries";
 
@@ -39,4 +38,4 @@ const SingleCharacterPage = ({ query }) => {
   );
 };
 
-export default Apollo(SingleCharacterPage, { getDataFromTree });
+export default Apollo(SingleCharacterPage);
