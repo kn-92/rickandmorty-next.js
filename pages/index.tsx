@@ -5,6 +5,9 @@ import Image from "next/image";
 
 import Apollo from "../apollo";
 
+import { AppWrapper, Paggination } from "@/styles/SingleCharacter/Home_index";
+import { CharacterElement } from "@/styles/SingleCharacter/Home_index";
+
 import { CHARACTERS_QUERY } from "../graphql/queries";
 import { getDataFromTree } from "@apollo/client/react/ssr";
 import { useState } from "react";
@@ -23,7 +26,6 @@ function Home() {
   const [inputValue, setInputValue] = useState({ name: "" });
   const [page, setPage] = useState(2);
   const { data, loading, fetchMore, error } = useQuery(CHARACTERS_QUERY);
-  console.log(data);
   const results = data?.characters?.results;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +72,7 @@ function Home() {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>ERROR!!!</div>;
   return (
-    <div>
+    <AppWrapper>
       <form onSubmit={handleSubmit}>
         <input
           value={inputValue.name}
@@ -82,7 +84,7 @@ function Home() {
       </form>
 
       {results.map((element: DataObj) => (
-        <div key={element.id}>
+        <CharacterElement key={element.id}>
           <Image
             width={100}
             height={100}
@@ -92,12 +94,14 @@ function Home() {
           <Link href="/characters/[id]" as={`characters/${element.id}`}>
             {element.name}
           </Link>
-        </div>
+        </CharacterElement>
       ))}
-      <button onClick={handleNext}>Next Page</button>
-      <div>{page - 1}</div>
-      <button onClick={handlePrevious}>Previous Page</button>
-    </div>
+      <Paggination>
+        <button onClick={handlePrevious}>Previous Page</button>
+        <div>{page - 1}</div>
+        <button onClick={handleNext}>Next Page</button>
+      </Paggination>
+    </AppWrapper>
   );
 }
 
