@@ -1,5 +1,4 @@
 import { useQuery } from "@apollo/client";
-import React, { MouseEventHandler } from "react";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -43,8 +42,8 @@ function Home() {
   const handlePrevious = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (page === 2) return;
-    fetchMore({ variables: { page: page - 1 } });
     setPage(page - 1);
+    fetchMore({ variables: { page: page - 2 } });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
