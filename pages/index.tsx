@@ -22,7 +22,7 @@ interface DataObj {
 function Home() {
   const [inputValue, setInputValue] = useState({ name: "" });
   const [page, setPage] = useState(2);
-  const { data, loading, fetchMore } = useQuery(CHARACTERS_QUERY);
+  const { data, loading, fetchMore, error } = useQuery(CHARACTERS_QUERY);
   console.log(data);
   const results = data?.characters?.results;
 
@@ -35,7 +35,12 @@ function Home() {
 
   const handleNext = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    fetchMore({ variables: { page: page } });
+    fetchMore({
+      variables: { page: page },
+      updateQuery(previousQueryResult, { fetchMoreResult }) {
+        return fetchMoreResult;
+      },
+    });
     setPage(page + 1);
   };
 
@@ -43,16 +48,27 @@ function Home() {
     e.preventDefault();
     if (page === 2) return;
     setPage(page - 1);
-    fetchMore({ variables: { page: page - 2 } });
+    fetchMore({
+      variables: { page: page - 2 },
+      updateQuery(previousQueryResult, { fetchMoreResult }) {
+        return fetchMoreResult;
+      },
+    });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    fetchMore({ variables: { filter: inputValue } });
+    fetchMore({
+      variables: { filter: inputValue },
+      updateQuery(previousQueryResult, { fetchMoreResult }) {
+        return fetchMoreResult;
+      },
+    });
     setInputValue({ name: "" });
   };
 
   if (loading) return <div>Loading...</div>;
+  if (error) return <div>ERROR!!!</div>;
   return (
     <div>
       <form onSubmit={handleSubmit}>
